@@ -1,0 +1,179 @@
+/* Design tokens: the five-colour palette, type and spacing.
+   Change a value here and it updates across the whole site. */
+
+:root {
+  /* Palette */
+  --ignition: #0e7c72; /* signature colour: CTA, links, active states */
+  --ivory: #faf9f6; /* dominant background */
+  --mist: #a7c4bc; /* supporting, used sparingly */
+  --sand: #ead9c8; /* supporting, used sparingly */
+  --deep: #1f2e2b; /* primary text */
+
+  /* Slightly darker Ignition for hover, made from the palette itself */
+  --ignition-hover: color-mix(in srgb, var(--ignition) 82%, var(--deep));
+  /* Softer Deep for secondary text, also made from the palette */
+  --deep-soft: color-mix(in srgb, var(--deep) 72%, var(--ivory));
+  --line: color-mix(in srgb, var(--deep) 14%, var(--ivory));
+
+  /* Typography: one family, hierarchy comes from size, weight and spacing */
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --text-eyebrow: 0.75rem;
+  --text-small: 0.9rem;
+  --text-body: 1.0625rem;
+  --text-lead: clamp(1.1rem, 1.5vw, 1.3rem);
+  --text-h2: clamp(1.6rem, 2.6vw, 2.2rem);
+  --text-h1: clamp(2.8rem, 6.6vw, 6rem);
+
+  /* Spacing */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+
+  --gutter: clamp(1.5rem, 6vw, 4rem);
+  --max-width: 1120px;
+  --header-height: 5.5rem;
+  --footer-height: 4.5rem;
+}
+
+src/styles/components.css
+
+css
+/* Reusable pieces: buttons, organic image frame, placeholders, eyebrow */
+
+.eyebrow {
+  font-size: var(--text-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--deep-soft);
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.9rem;
+  border: 1px solid var(--ignition);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Gentle lift on hover, settles back down when pressed */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -10px color-mix(in srgb, var(--ignition) 70%, transparent);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn--primary {
+  background: var(--ignition);
+  color: var(--ivory);
+}
+
+.btn--primary:hover {
+  background: var(--ignition-hover);
+  border-color: var(--ignition-hover);
+  color: var(--ivory);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--ignition);
+}
+
+.btn--outline:hover {
+  background: var(--ignition);
+  color: var(--ivory);
+}
+
+.btn__arrow {
+  transition: transform 0.2s ease;
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(3px);
+}
+
+/* Organic frame: a single large curve on the top-left corner of an image */
+
+.organic-frame {
+  overflow: hidden;
+  border-top-left-radius: 65% 48%;
+  background: var(--sand);
+}
+
+.organic-frame {
+  position: relative;
+}
+
+.organic-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+/* Slow, quiet zoom when the image is hovered */
+.organic-frame:hover img {
+  transform: scale(1.04);
+}
+
+/* In the hero the image fills the height it is given, up to a maximum */
+.organic-frame--fill {
+  width: 100%;
+  height: 100%;
+  max-height: 32rem;
+}
+
+.organic-frame--fill img {
+  position: absolute;
+  inset: 0;
+}
+
+/* Links inside text: the underline thickens on hover */
+.page a:not(.btn) {
+  text-decoration-thickness: 1px;
+  transition:
+    text-decoration-thickness 0.2s ease,
+    color 0.2s ease;
+}
+
+.page a:not(.btn):hover {
+  text-decoration-thickness: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Marked placeholder text: easy to spot, easy to search for */
+
+.placeholder {
+  background: color-mix(in srgb, var(--sand) 55%, var(--ivory));
+  border-bottom: 1px dashed var(--deep-soft);
+  padding-inline: 0.15em;
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Image placeholder">
+  <rect width="800" height="1000" fill="#EAD9C8"/>
+  <path d="M0 640 C 180 560, 320 700, 520 620 S 760 560, 800 600 L800 1000 L0 1000 Z" fill="#A7C4BC" opacity="0.55"/>
+  <path d="M0 780 C 200 720, 360 840, 560 770 S 740 740, 800 760 L800 1000 L0 1000 Z" fill="#0E7C72" opacity="0.85"/>
+  <text x="400" y="400" text-anchor="middle" font-family="Georgia, serif" font-size="34" fill="#1F2E2B" opacity="0.7">Your image here</text>
+  <text x="400" y="445" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#1F2E2B" opacity="0.5">src/assets/image-placeholder.svg</text>
+</svg>

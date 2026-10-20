@@ -1,0 +1,113 @@
+/* Page frame: header, main area, footer */
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.site {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+
+.header__inner {
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.header__brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.header__logo {
+  height: 2.1rem;
+  width: auto;
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s ease;
+}
+
+/* Logo softens and nudges up slightly on hover */
+.header__brand:hover .header__logo {
+  opacity: 0.75;
+  transform: translateY(-1px);
+}
+
+.header__links {
+  display: flex;
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+}
+
+/* Menu and footer links: the underline draws in from the left on hover
+   and slides out to the right when the mouse leaves. */
+.nav-link {
+  position: relative;
+  display: inline-block;
+  padding-block: 0.25rem;
+  color: var(--deep-soft);
+  font-size: var(--text-small);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--ignition);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s ease;
+}
+
+.nav-link:hover,
+.nav-link--active {
+  color: var(--ignition);
+}
+
+.nav-link:hover::after,
+.nav-link--active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Footer */
+
+.footer {
+  border-top: 1px solid var(--line);
+}
+
+.footer__inner {
+  min-height: var(--footer-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--text-small);
+  color: var(--deep-soft);
+}
+
+.footer__links {
+  display: flex;
+  gap: var(--space-3);
+}

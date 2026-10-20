@@ -1,0 +1,171 @@
+/* Reusable pieces: buttons, organic image frame, placeholders, eyebrow */
+
+/* One shared height for the framed image and the contact form:
+   nearly the full screen between header and footer, with a sensible max. */
+:root {
+  --frame-height: clamp(18rem, calc(100svh - var(--header-height) - var(--footer-height) - 6rem), 40rem);
+}
+
+.eyebrow {
+  font-size: var(--text-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--deep-soft);
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.9rem;
+  border: 1px solid var(--ignition);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Gentle lift on hover, settles back down when pressed */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -10px color-mix(in srgb, var(--ignition) 70%, transparent);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn--primary {
+  background: var(--ignition);
+  color: var(--ivory);
+}
+
+.btn--primary:hover {
+  background: var(--ignition-hover);
+  border-color: var(--ignition-hover);
+  color: var(--ivory);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--ignition);
+}
+
+.btn--outline:hover {
+  background: var(--ignition);
+  color: var(--ivory);
+}
+
+.btn__arrow {
+  transition: transform 0.2s ease;
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(3px);
+}
+
+/* Organic frame: a single large curve on the top-left corner of an image */
+
+.organic-frame {
+  position: relative;
+  overflow: hidden;
+  border-top-left-radius: 65% 48%;
+  background: var(--sand);
+}
+
+.organic-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Which part of the photo stays visible: 0% = top, 50% = middle */
+  object-position: center 25%;
+  transition: transform 1.2s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+/* Slow, quiet zoom when the image is hovered */
+.organic-frame:hover img {
+  transform: scale(1.04);
+}
+
+/* Wrapper around the image: holds the line frame */
+.organic-wrap {
+  position: relative;
+}
+
+/* The framed image has the same size on Home and About:
+   its height is the shared --frame-height defined at the top. */
+.organic-wrap--fill {
+  width: 100%;
+  height: var(--frame-height);
+}
+
+.organic-wrap--fill .organic-frame {
+  width: 100%;
+  height: 100%;
+}
+
+.organic-wrap--fill .organic-frame img {
+  position: absolute;
+  inset: 0;
+}
+
+/* Line frame inspired by the logo: thin Mist lines just outside the image,
+   in two corners (top right and bottom left). */
+.organic-wrap--lines::before {
+  content: "";
+  position: absolute;
+  inset: -0.9rem;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--mist), var(--mist)) top right / 4.5rem 2px,
+    linear-gradient(var(--mist), var(--mist)) top right / 2px 4.5rem,
+    linear-gradient(var(--mist), var(--mist)) bottom left / 4.5rem 2px,
+    linear-gradient(var(--mist), var(--mist)) bottom left / 2px 4.5rem;
+  background-repeat: no-repeat;
+  transition: inset 0.5s ease;
+}
+
+/* On hover the frame opens up a little */
+.organic-wrap--lines:hover::before {
+  inset: -1.25rem;
+}
+
+/* Links inside text: the underline thickens on hover */
+.page a:not(.btn) {
+  text-decoration-thickness: 1px;
+  transition:
+    text-decoration-thickness 0.2s ease,
+    color 0.2s ease;
+}
+
+.page a:not(.btn):hover {
+  text-decoration-thickness: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Marked placeholder text: looks like normal text.
+   Placeholders are written in [square brackets], so search for "[" to find them. */
+
+.placeholder {
+  background: none;
+  border-bottom: 0;
+}

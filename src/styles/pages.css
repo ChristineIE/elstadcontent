@@ -1,0 +1,466 @@
+/* Page-specific layout */
+
+/* ---------- Home ---------- */
+
+/* The hero is a .container, so it lines up with the header and footer
+   and keeps air on both sides. */
+.hero {
+  flex: 0 0 auto;
+  min-height: calc(100svh - var(--header-height) - var(--footer-height) - 1px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  grid-template-rows: minmax(0, 1fr);
+  column-gap: clamp(2rem, 7vw, 6rem);
+  align-items: stretch;
+}
+
+.hero__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  /* spacing follows the screen height so everything fits on short screens too */
+  gap: clamp(1.25rem, 3.6vh, 2.25rem);
+  padding-block: clamp(0.5rem, 2vh, 2rem);
+}
+
+.hero__title {
+  /* the smaller of "wide screen" and "tall screen" wins, so it never overflows */
+  font-size: clamp(1.7rem, min(3.2vw, 5.2vh), 2.8rem);
+  line-height: 1.06;
+}
+
+.hero__title-accent {
+  display: block;
+  color: var(--ignition);
+  font-size: 0.55em;
+  margin-top: 0.15em;
+}
+
+.hero__lead {
+  max-width: 32rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--deep-soft);
+}
+
+.hero__text .btn {
+  margin-top: clamp(0.5rem, 2vh, 1.25rem);
+}
+
+/* The image sits inside the column, vertically centred */
+.hero__image {
+  display: flex;
+  align-items: center;
+  min-height: 0;
+  padding-block: clamp(0.5rem, 2vh, 2rem);
+}
+
+/* ---------- About & Contact ----------
+   Both pages use the same .hero layout as Home, so there is only
+   a little extra styling for the contact details and the form. */
+
+.contact__details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: clamp(1rem, 4vh, 2.5rem) 0 0;
+}
+
+.contact__details dd {
+  margin: 0.25rem 0 0;
+}
+
+/* Line frame around the contact form: same corners as the image frames,
+   sitting right at the edge of the padded box. The box is as tall as the
+   image on Home, and grows only if the form needs more room. */
+.organic-wrap--form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: var(--frame-height);
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.organic-wrap--form::before,
+.organic-wrap--form:hover::before {
+  inset: 0;
+}
+
+/* The message field takes whatever height is left in the box */
+.form {
+  flex: 1;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: clamp(0.75rem, 2vh, 1.25rem);
+}
+
+.form__field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.form__field--grow {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.form__field input,
+.form__field textarea {
+  width: 100%;
+  padding: 0.7rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--deep-soft);
+  border-radius: 0;
+  background: transparent;
+  color: var(--deep);
+  font: inherit;
+}
+
+.form__field--grow textarea {
+  height: 100%;
+  min-height: 4.5rem;
+  resize: none;
+}
+
+.form__field input:focus,
+.form__field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--ignition);
+  box-shadow: 0 1px 0 var(--ignition);
+}
+
+.form__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.form__status {
+  font-size: var(--text-small);
+  color: var(--deep-soft);
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .hero__text {
+    padding-block: var(--space-4);
+  }
+
+  /* On small screens the page may scroll: text first, then the image. */
+  .hero__image {
+    padding-block: 0 var(--space-4);
+  }
+
+  .organic-wrap--fill {
+    height: 22rem;
+  }
+
+  .organic-wrap--form {
+    min-height: 0;
+  }
+}
+
+/* ---------- Home: selected clients & partners ---------- */
+
+.clients {
+  padding-block: clamp(2.5rem, 8vh, 5rem) clamp(1.5rem, 4vh, 3rem);
+  text-align: center;
+}
+
+.clients__title {
+  width: 100%;
+  margin: 0 0 clamp(0.75rem, 2.5vh, 1.5rem);
+  text-align: center;
+}
+
+/* Arrow | track | arrow, with the arrows on either side of the logos */
+.clients__stage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.clients__arrow {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--deep-soft);
+  font: inherit;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.clients__arrow:hover:not(:disabled) {
+  color: var(--ignition);
+}
+
+.clients__arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* The track scrolls sideways and snaps one "page" at a time.
+   4 logos per page: change the 25% below to 20% to show 5. */
+.clients__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.clients__track::-webkit-scrollbar {
+  display: none;
+}
+
+.clients__item {
+  flex: 0 0 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(3rem, 8vh, 4.5rem);
+  scroll-snap-align: start;
+  border-left: 1px solid var(--line);
+}
+
+.clients__item:first-child {
+  border-left: 0;
+}
+
+.clients__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.clients__link:hover .clients__name {
+  color: var(--ignition);
+}
+
+.clients__name {
+  font-size: var(--text-small);
+  letter-spacing: 0.04em;
+  color: var(--deep-soft);
+  transition: color 0.25s ease;
+}
+
+.clients__item:hover .clients__name {
+  color: var(--deep);
+}
+
+/* Real logos: calm and grey until hovered */
+.clients__logo {
+  max-width: 60%;
+  max-height: 42%;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.6;
+  transition:
+    opacity 0.3s ease,
+    filter 0.3s ease;
+}
+
+.clients__item:hover .clients__logo {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+/* Page markers, centred: small circles of equal size.
+   The current page is Ignition, the others are Mist. */
+.clients__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-top: clamp(0.75rem, 2vh, 1.25rem);
+}
+
+.clients__dot {
+  position: relative;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.clients__dot::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--mist);
+  transition: background-color 0.3s ease;
+}
+
+.clients__dot:hover::before,
+.clients__dot--active::before {
+  background: var(--ignition);
+}
+
+@media (max-width: 860px) {
+  .clients {
+    padding-block: var(--space-5);
+  }
+
+  /* On small screens: swipe instead of arrows, 2 logos per page */
+  .clients__stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .clients__arrow {
+    display: none;
+  }
+
+  .clients__item {
+    flex-basis: 50%;
+    height: 3.5rem;
+  }
+}
+
+/* ---------- About: experience timeline ---------- */
+
+.timeline {
+  --row-pad: clamp(0.9rem, 2.4vh, 1.5rem);
+  --dot-top: calc(var(--row-pad) + 1.05rem);
+  padding-block: clamp(2.5rem, 8vh, 5rem) clamp(2rem, 6vh, 4rem);
+}
+
+.timeline__title {
+  margin: 0 0 clamp(1rem, 3vh, 2rem);
+}
+
+.timeline__list {
+  max-width: 46rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline__item {
+  display: grid;
+  grid-template-columns: 6.5rem 2rem minmax(0, 1fr);
+  align-items: start;
+}
+
+.timeline__year,
+.timeline__text,
+.timeline__dot {
+  padding-block: var(--row-pad);
+}
+
+.timeline__year {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--deep);
+  transition: color 0.25s ease;
+}
+
+.timeline__text {
+  padding-top: calc(var(--row-pad) + 0.3rem);
+  line-height: 1.5;
+  color: var(--deep-soft);
+  transition:
+    color 0.25s ease,
+    transform 0.35s ease;
+}
+
+/* Thin vertical line with a small round marker per row,
+   the same dot style as the client carousel. */
+.timeline__dot {
+  position: relative;
+  align-self: stretch;
+  padding: 0;
+}
+
+.timeline__dot::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--mist);
+}
+
+.timeline__item:first-child .timeline__dot::before {
+  top: var(--dot-top);
+}
+
+.timeline__item:last-child .timeline__dot::before {
+  bottom: auto;
+  height: var(--dot-top);
+}
+
+.timeline__dot::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: var(--dot-top);
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: var(--ivory);
+  border: 1.5px solid var(--mist);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* The latest step is filled with the signature colour */
+.timeline__item:last-child .timeline__dot::after {
+  background: var(--ignition);
+  border-color: var(--ignition);
+}
+
+.timeline__item:hover .timeline__year {
+  color: var(--ignition);
+}
+
+.timeline__item:hover .timeline__text {
+  color: var(--deep);
+  transform: translateX(4px);
+}
+
+.timeline__item:hover .timeline__dot::after {
+  background: var(--ignition);
+  border-color: var(--ignition);
+  transform: scale(1.25);
+}
+
+@media (max-width: 860px) {
+  .timeline__item {
+    grid-template-columns: 4.5rem 1.5rem minmax(0, 1fr);
+  }
+
+  .timeline__year {
+    font-size: 1.15rem;
+  }
+}
